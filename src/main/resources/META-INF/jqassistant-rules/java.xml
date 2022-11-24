@@ -36,17 +36,7 @@
         </description>
         <cypher><![CDATA[
             MATCH
-              (type:Type)
-            MERGE
-              (type)-[:ASSIGNABLE_FROM]->(type)
-            WITH
-              type
-            MATCH
-              (type)-[:IMPLEMENTS|EXTENDS*]->(superType:Type)
-            WITH
-              type, collect(distinct superType) as superTypes
-            UNWIND
-              superTypes as superType
+              (type:Java:Type)-[:IMPLEMENTS|EXTENDS*0..]->(superType:Type)
             MERGE
               (superType)-[:ASSIGNABLE_FROM]->(type)
             RETURN type AS AssignableType, superType AS AssignableFrom
